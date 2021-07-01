@@ -1,0 +1,113 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock extrahead %}
+
+{% block content %}
+	<div class="form-banner">
+		<h1 class="form-banner-title">
+			Iniciar Sesión
+		</h1>
+	</div>
+	<div class="main-form">
+        <form method="POST" action="" class="form" id="form">
+			{% csrf_token %}
+            <div class="form__group" id="group__username">
+                <label for="username" class="form__label">Usuario <span class="required-toolkit">*
+					<div class="nav-tooltip form-tooltip">
+                        Obligatorio
+                    </div>
+				</span></label>
+                <div class="form__group-input">
+                    {{ form.username }}
+                    <i class="form__validation-status far fa-times-circle"></i>
+                </div>
+                <p class="form__input-error">El usuario tiene que ser de 1 a 150 dígitos y sólo puede contener letras, números y sólo estos caracteres especiales: '@', '.', '+', '-', '_'.</p>
+            </div>
+
+			<div class="form__group" id="group__email">
+                <label for="email" class="form__label">Email <span class="required-toolkit">*
+					<div class="nav-tooltip form-tooltip">
+                        Obligatorio
+                    </div>
+				</span></label>
+                <div class="form__group-input">
+                    {{ form.email }}
+                    <i class="form__validation-status far fa-times-circle"></i>
+                </div>
+                <p class="form__input-error">El correo sólo puede contener letras, números y solo caracteres especiales como: '_', '-', '.', '+' .</p>
+            </div>
+
+            <div class="form__group" id="group__first_name">
+                <label for="firstname" class="form__label">Nombre <span class="required-toolkit">*
+					<div class="nav-tooltip form-tooltip">
+                        Obligatorio
+                    </div>
+				</span></label>
+                <div class="form__group-input">
+                    {{form.first_name}}
+                    <i class="form__validation-status far fa-times-circle"></i>
+                </div>
+                <p class="form__input-error">El nombre tiene que ser de 4 a 16 dígitos y sólo puede contener letras y espacios.</p>
+			</div>
+			
+			<div class="form__group" id="group__last_name">
+                <label for="lastname" class="form__label">Apellido <span class="required-toolkit">*
+					<div class="nav-tooltip form-tooltip">
+                        Obligatorio
+                    </div>
+				</span></label>
+                <div class="form__group-input">
+                    {{form.last_name}}
+                    <i class="form__validation-status far fa-times-circle"></i>
+                </div>
+                <p class="form__input-error">El apellido tiene que ser de 4 a 16 dígitos y sólo puede contener letras y espacios.</p>
+            </div>
+
+            <div class="form__group" id="group__password1">
+                <label for="password" class="form__label">Contraseña <span class="required-toolkit">*
+					<div class="nav-tooltip form-tooltip">
+                        Obligatorio
+                    </div>
+				</span></label>
+                <div class="form__group-input">
+					{{form.password1}}
+                    <i class="form__validation-status far fa-times-circle"></i>
+                </div>
+                <p class="form__input-error">La contraseña debe tener de 4 a 16 dígitos.</p>
+            </div>
+
+            <div class="form__group" id="group__password2">
+                <label for="password2" class="form__label">Repetir Contraseña <span class="required-toolkit">*
+					<div class="nav-tooltip form-tooltip">
+                        Obligatorio
+                    </div>
+				</span></label>
+                <div class="form__group-input">
+					{{form.password2}}
+                    <i class="form__validation-status far fa-times-circle"></i>
+                </div>
+                <p class="form__input-error">Ambas contraseñas deben coincidir.</p>
+            </div>
+
+            <div class="form__group" id="group_terms">
+                <label class="form__label">
+                    <input type="checkbox" class="form__checkbox" name="terms" id="terms">
+                    Acepto los términos y condiciones.
+                </label>
+            </div>
+
+            {% include 'store/messages.html' %}
+
+            <div class="form__group form__group-btn-submit">
+				<button type="submit" class="main-btn form__btn btn-primary">Registrarme</button>
+				<small class="submit-login">Ya tenés una cuenta? 
+					<a class="submit-login-link" href="{% url 'login' %}">Iniciar Sesión</a>
+				</small>
+                <p class="form__message-success" id="form__message-success">Datos enviados correctamente!</p>
+            </div>
+        </form> 
+    </div>
+{% endblock %}

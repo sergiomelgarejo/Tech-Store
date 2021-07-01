@@ -1,0 +1,973 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Market Tech | {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <script type="text/javascript">
+        var user = '{{request.user}}'
+
+        function getToken(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        var csrftoken = getToken('csrftoken');
+
+        function getCookie(name) {
+            // Split cookie string and get all individual name=value pairs in an array
+            var cookieArr = document.cookie.split(";");
+
+            // Loop through the array elements
+            for (var i = 0; i < cookieArr.length; i++) {
+                var cookiePair = cookieArr[i].split("=");
+                
+                /* Removing whitespace at the beginning of the cookie name
+                and compare it with the given string */
+                if (name == cookiePair[0].trim()) {
+                    // Decode the cookie value and return
+                    return decodeURIComponent(cookiePair[1]);
+                }
+            }
+
+            // Return null if not found
+            return null;
+        }
+
+        var cart = JSON.parse(getCookie('cart'));
+
+        if (cart == undefined) {
+            cart = {}
+            console.log('Cart was created!');
+            document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+        }
+
+        console.log('Cart:', cart);
+    </script>
+    {% block extrahead %}{% endblock %}
+</head>
+<body>  
+    <!-- page loader -->
+    <!-- <div id="dots-wrapper">
+        <div class="loading-dots">
+            <div class="bounce"></div>
+            <div class="bounce"></div>
+            <div class="bounce"></div>
+        </div>
+    </div> -->
+    <header id="Header" class="header">
+        <div class="container">
+            <nav>
+                <div class="menu-icons">
+                    <i class="icon ion-ios-menu"></i>
+                    <i class="icon ion-ios-close"></i>
+                </div>
+                <a href="{% url 'store' %}" class="nav-logo">
+                    <img src="{% static 'css/img/logo.png' %}" alt="" class="logo-img">
+                    <div class="nav-tooltip">
+                        Home
+                    </div>
+                </a>
+                 <!-- mobile nav-right -->
+                <div class="nav-right">
+                    <div class="search-icons">
+                        <i id="mobile-icon-search" class="icon ion-ios-search"></i>
+                        <i id="mobile-icon-close" class="icon ion-ios-close"></i>
+                    </div>
+                    
+                    <a title="Carrito" href="{% url 'cart' %}" class="nav-right-link">
+                        <i class="icon ion-ios-cart">
+                            {% if cartItems > 0 %}
+                                <div class="cart-count">
+                                    {{cartItems}}
+                                </div>
+                            {% endif %}
+                        </i>
+                        <div class="nav-tooltip">
+                            Carrito
+                        </div>
+                    </a>
+                    <a title="Perfil" href="{% url 'account' %}" class="nav-right-link">
+                        <i class="icon ion-ios-person">
+                            {% if user.is_authenticated %}
+                                <div class="profile-active"></div>
+                            {% endif %}
+                        </i>
+                        <div class="nav-tooltip">
+                            Perfil
+                        </div>
+                    </a>
+                </div>
+                <ul id="nav-list" class="nav-list">
+                        <li class="nav-list-item">
+                            <a class="sub-menu-item main-item" href="#">Smartphones
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class="nav-list-item">
+                                    <a class="sub-menu-item" href="#">Todo +</a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a class="sub-menu-item" href="#">iPhone
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="/products/7/">11 Pro</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">11</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">SE 2020</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Más...</a>
+                                            <ul class="sub-menu">
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">XR</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="/products/8/">XS</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">8 Plus</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a class="sub-menu-item" href="#">Samsung
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="/products/11/">S20 Ultra</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">S20</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Más...
+                                            </a>
+                                            <ul class="sub-menu">
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">A50</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">A20</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">A10</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a class="sub-menu-item" href="#">Xiaomi
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Mi 8</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Redmi note 9</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Redmi note 10S</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Más...
+                                            </a>
+                                            <ul class="sub-menu">
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Mi 9t Dual</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Mi 8 Global Dual</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a class="sub-menu-item" href="#">Huawei
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">P30 Pro</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">P30</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">P30 Lite</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Más...
+                                            </a>
+                                            <ul class="sub-menu">
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Honor 10</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Honor 8x</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a class="sub-menu-item" href="#">Más
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">OnePlus
+                                                <i class="fas fa-chevron-right"></i>
+                                            </a>
+                                            <ul class="sub-menu">
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">8 Pro</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">8</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">7 Pro</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Sony
+                                                <i class="fas fa-chevron-right"></i>
+                                            </a>
+                                            <ul class="sub-menu">
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Xperia X3+</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Xperia X3</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Xperia Z2</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Htc
+                                                <i class="fas fa-chevron-right"></i>
+                                            </a>
+                                            <ul class="sub-menu">
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">10</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">One m8</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">One M7</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+    
+                        <li class="nav-list-item">
+                            <a class="sub-menu-item main-item" href="#">Electrónica
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class="nav-list-item">
+                                    <a class="sub-menu-item" href="#">Todo +
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a class="sub-menu-item" href="#">Audio
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Auriculares</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Parlantes</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Micrófonos</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Más...
+                                            </a>
+                                            <ul class="sub-menu">
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Radios Portátiles</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Reproductores de música</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Accesorios de Audio</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a class="sub-menu-item" href="#">Cables
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">HDMI</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">USB-C</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Micro-USB</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Más...
+                                            </a>
+                                            <ul class="sub-menu">
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">VGA</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Ethernet</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a class="sub-menu-item" href="#">Imágenes y Video
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Cámaras</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">GoPro 4k</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Más...
+                                            </a>
+                                            <ul class="sub-menu">
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Accesorios</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a class="sub-menu-item" href="#">Más
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Seguridad
+                                                <i class="fas fa-chevron-right"></i>
+                                            </a>
+                                            <ul class="sub-menu">
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Cámaras</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Alarmas</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Sistemas Biométricos</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+    
+                        <li class="nav-list-item">
+                            <a class="sub-menu-item main-item" href="#">Informática
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class="nav-list-item">
+                                    <a class="sub-menu-item" href="#">Todo +
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a class="sub-menu-item" href="#">Notebooks
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Macbook</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">De Trabajo</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">De Estudio</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Gamer</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Más...
+                                            </a>
+                                            <ul class="sub-menu">
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Mochilas</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Fundas</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a class="sub-menu-item" href="#">Desktops
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">iMac</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">All In One</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a class="sub-menu-item" href="#">Monitores
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Curvo</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Ultrawide</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Gamer</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">IPS</a>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">4K</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a class="sub-menu-item" href="#">Componentes
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Procesadores (CPU)</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Motherboard</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">RAM</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Tarjeta Gráfica</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Teclado</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Mouse</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Más...
+                                            </a>
+                                            <ul class="sub-menu">
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Gabinete</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Fuente</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Accesorios</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a class="sub-menu-item" href="#">Almacenamiento
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">SSD
+                                                <i class="fas fa-chevron-right"></i>
+                                            </a>
+                                        </li>
+                                        <ul class="sub-menu">
+                                            <li class="nav-list-item">
+                                                <a class="sub-menu-item" href="#">SSD Interno</a>
+                                            </li>
+                                            <li class="nav-list-item">
+                                                <a class="sub-menu-item" href="#">SSD M.2</a>
+                                            </li>
+                                            <li class="nav-list-item">
+                                                <a class="sub-menu-item" href="#">SSD Portátil</a>
+                                            </li>
+                                        </ul>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">HDD</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">HDD Externo</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Más...</a>
+                                            <ul class="sub-menu">
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Lector</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Micro SD</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a class="sub-menu-item" href="#">Más
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Wifi
+                                                <i class="fas fa-chevron-right"></i>
+                                            </a>
+                                            <ul class="sub-menu">
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Routers</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Repetidores</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Extensor</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Adaptadores PCI/USB</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Switchs</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Impresoras
+                                                <i class="fas fa-chevron-right"></i>
+                                            </a>
+                                            <ul class="sub-menu">
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Láser</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Cartucho Tinta</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Matriciales</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Tinta</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Adaptadores
+                                                <i class="fas fa-chevron-right"></i>
+                                            </a>
+                                            <ul class="sub-menu">
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Audio/Video</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Energía</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Hubs USB</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-list-item">
+                            <a class="sub-menu-item main-item" href="#">Videojuegos
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class="nav-list-item">
+                                    <a class="sub-menu-item" href="#">Todo +
+                                    </a>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a class="sub-menu-item" href="#">Consolas
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">PS5</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Xbox X</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">PS4</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Xbox One</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Más...
+                                            </a>
+                                            <ul class="sub-menu">
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Nintendo</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">VR</a>
+                                                </li>
+                                                <li class="nav-list-item">
+                                                    <a class="sub-menu-item" href="#">Otros</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a class="sub-menu-item" href="#">Juegos
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">PS4</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Xbox</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Nintendo Switch</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-list-item">
+                                    <a class="sub-menu-item" href="#">Accesorios
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Controles</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Volantes</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Cables HDMI</a>
+                                        </li>
+                                            <a class="sub-menu-item" href="#">Auriculares</a>
+                                        </li>
+                                        <li class="nav-list-item">
+                                            <a class="sub-menu-item" href="#">Otros</a>
+                                        <li class="nav-list-item">
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    <div class="mobile-nav-login">
+                        <div class="mobile-login-container">
+                            <div class="mobile-login-menu">
+                                <div class="user-menu">
+                                    <p class="user-menu-title">Quicklinks</p>
+                                    <ul class="user-menu-list">
+                                        <li class="user-menu-item">
+                                            <a href="{% url 'account' %}" class="user-menu-link">
+                                                <span>Mi Cuenta</span>
+                                            </a>
+                                        </li>
+                                        <li class="user-menu-item">
+                                            <a href="#" class="user-menu-link">
+                                                <span>Devoluciones</span>
+                                            </a>
+                                        </li>
+                                        <li class="user-menu-item">
+                                            <a href="#" class="user-menu-link">
+                                                <span>Soporte</span>
+                                            </a>
+                                        </li>
+                                        <li class="user-menu-item">
+                                            <a href="#" class="user-menu-link">
+                                                <span>Ofertas</span>
+                                            </a>
+                                        </li>
+                                        <li class="user-menu-item cash-item">
+                                            <!-- cash selector -->
+                                            <div class="cash-selector">
+                                                <form action="" class="cash-selector-form">
+                                                    <div class="selectbox">
+                                                        <div class="select" id="select">
+                                                            <div class="content-select">
+                                                                <a href="#" class="option">
+                                                                    <div class="content-option">
+                                                                        <img src="{% static 'css/img/cash_icons/us_64px.png' %}" alt="" class="option-img">
+                                                                        <h2 class="option-title">Dólar</h2>
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                            <i class="fas fa-chevron-down"></i>
+                                                        </div>
+                                                        <div class="options" id="options">
+                                                            <a href="#" class="option">
+                                                                <div class="content-option">
+                                                                    <img src="{% static 'css/img/cash_icons/us_64px.png' %}" alt="" class="option-img">
+                                                                    <h2 class="option-title">Dólar</h2>
+                                                                </div>
+                                                            </a>
+                                                            <a href="#" class="option">
+                                                                <div class="content-option">
+                                                                    <img src="{% static 'css/img/cash_icons/uk_64px.png' %}" alt="" class="option-img">
+                                                                    <h2 class="option-title">Libra Esterlina</h2>
+                                                                </div>
+                                                            </a>
+                                                            <a href="#" class="option">
+                                                                <div class="content-option">
+                                                                    <img src="{% static 'css/img/cash_icons/py_64px.png' %}" alt="" class="option-img">
+                                                                    <h2 class="option-title">Guaraní</h2>
+                                                                </div>
+                                                            </a>
+                                                            <a href="#" class="option">
+                                                                <div class="content-option">
+                                                                    <img src="{% static 'css/img/cash_icons/ar_64px.png' %}" alt="" class="option-img">
+                                                                    <h2 class="option-title">Peso Argentino</h2>
+                                                                </div>
+                                                            </a>
+                                                            <a href="#" class="option">
+                                                                <div class="content-option">
+                                                                    <img src="{% static 'css/img/cash_icons/br_64px.png' %}" alt="" class="option-img">
+                                                                    <h2 class="option-title">Real</h2>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+                                                    <input type="hidden" name="country" id="input-select" value="">
+                                                </form>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="user-menu-auth">
+                                    <a href="{% url 'login' %}" class="main-btn btn-primary btn-block">Acceder</a>
+                                    <div class="user-menu-auth-link">
+                                        <span>¿Todavía no tenés una cuenta?</span>
+                                        <a href="{% url 'register' %}">Registrarse</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ul>
+                <!-- Desktop search box -->
+                <div class="nav-desktop-search">
+                    <div class="desktop-search-bar">
+                        <form class="desktop-search-form" action="#">
+                            <span class="search-icon">
+                                <i class="icon ion-ios-search"></i>
+                            </span>
+                            <input 
+                                type="text" 
+                                class="search-input" 
+                                value placeholder="Buscar..." 
+                                autocomplete="off"
+                                spellcheck="false">
+                        </form>
+                    </div>
+                    <div class="desktop-nav-right">
+                        <a class="desktop-nav-item" href="{% url 'cart' %}">
+                            <i class="icon ion-ios-cart">
+                                {% if cartItems > 0 %}
+                                    <div class="cart-count">
+                                        {{cartItems}}
+                                    </div>
+                                {% endif %}
+                            </i>
+                            <div class="nav-tooltip">
+                                Carrito
+                            </div>
+                        </a>
+                        <a class="desktop-nav-item" href="{% url 'account' %}">
+                            <i class="icon ion-ios-person">
+                                {% if user.is_authenticated %}
+                                    <div class="profile-active"></div>
+                                {% endif %}
+                            </i>
+                            <div class="nav-tooltip">
+                                Cuenta
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!-- Mobile search box -->
+                <div class="is_mobile">
+                    <div id="mobile-search" class="mobile-search">
+                        <div class="mobile-search-bar">
+                            <form class="mobile-search-form" action="#">
+                                <span class="search-icon">
+                                    <i class="icon ion-ios-search"></i>
+                                </span>
+                                <input 
+                                    type="text" 
+                                    class="search-input" 
+                                    value placeholder="Buscar..." 
+                                    autocomplete="off"
+                                    spellcheck="false">
+                                
+                                <div class="mobile-close">
+                                    <button class="close-btn" type="reset">
+                                        <svg class="close-svg" xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 512 512'><title>ionicons-v5-l</title><line x1='368' y1='368' x2='144' y2='144' style='fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'/><line x1='368' y1='144' x2='144' y2='368' style='fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'/></svg>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="search-mobile-links">
+                            <div class="search-mobile-link">
+                                <a href="#" class="search-mobile-link-container">
+                                    <div class="search-mobile-link-inner">
+                                       <img src="{% static 'css/img/icons/delivery_120px.png' %}" alt="" class="search-mobile-link-image"> 
+                                       <div class="label">
+                                            <div class="label_title">El envío más rápido del país</div>
+                                            <div class="label_text">Envío gratis a todo Asunción y Gran Asunción.</div>
+                                       </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="search-mobile-link">
+                                <a href="#" class="search-mobile-link-container">
+                                    <div class="search-mobile-link-inner">
+                                        <img src="{% static 'css/img/icons/transaction_120px.png' %}" alt="" class="search-mobile-link-image" loading="lazy">
+                                        <div class="label">
+                                           <div class="label_title">Devoluciones gratis</div>
+                                           <div class="label_text">Para todos los productos los días hábiles.</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- main -->
+    <div class="main-content">
+        {% block content %}{% endblock content %}
+    </div>
+    
+    <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-content-brand">
+                        <a href="{% url 'store' %}" class="footer-logo">
+                            <img src="{% static 'css/img/logo.png' %}" alt="" class="logo-img">
+                        </a>
+                        <div class="paragraph">
+                            <p>221B Baker Street. Londres, Reino Unido.</p> 
+                            <p>1900 S Figueroa St, Los Angeles, Estados Unidos</p>
+                        </div>
+                    </div>
+                    <div class="social-media-wrap">
+                        <h4 class="footer-heading">Redes Sociales</h4>
+                        <div class="social-media">
+                            <a title="Twitter" href="#" class="sm-link"><i class="fab fa-twitter"></i></a>
+                            <a title="Facebook" href="#" class="sm-link"><i class="fab fa-facebook-square"></i></a>
+                            <a title="Instagram" href="#" class="sm-link"><i class="fab fa-instagram"></i></a>
+                            <a title="Pinterest" href="#" class="sm-link"><i class="fab fa-pinterest"></i></a>
+                            <a title="Youtube" href="#" class="sm-link"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                    <!-- mobile -->
+                    <div class="footer-support">
+                        <div class="footer-support-title">
+                            <h4 class="footer-nav-heading">Soporte
+                                <i class="footer fas fa-chevron-right"></i>
+                            </h4>
+                        </div>
+                        <ul class="footer-nav-container">
+                            <div class="footer-nav-list-column">
+                                <a href="#" class="footer-nav-link">Servicio al Consumidor</a>
+                                <a href="#" class="footer-nav-link">Envío y Delivery</a>
+                                <a href="#" class="footer-nav-link">Política de Devoluciones</a>
+                            </div>
+                            <div class="footer-nav-list-column">
+                                <a href="#" class="footer-nav-link">Contactanos</a>
+                                <a href="#" class="footer-nav-link">Política de Descuentos</a>
+                                <a href="#" class="footer-nav-link">Términos y Condiciones</a>
+                            </div>
+                        </ul>
+                    </div>
+                    <!-- desktop -->
+                    <div class="footer-support-desk">
+                        <div class="footer-support-desk-title">
+                            <h4 class="footer-nav-heading">Soporte
+                            </h4>
+                        </div>
+                        <ul class="footer-desk-nav-container">
+                            <div class="footer-nav-desk-list-column">
+                                <a href="#" class="footer-nav-link">Envío y Delivery</a>
+                                <a href="#" class="footer-nav-link">Política de Devoluciones</a>
+                            </div>
+                            <div class="footer-nav-dek-list-column">
+                                <a href="#" class="footer-nav-link">Contactanos</a>
+                                <a href="#" class="footer-nav-link">Términos y Condiciones</a>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    </footer>
+
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/cart.js' %}"></script>
+</body>
+</html>

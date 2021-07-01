@@ -1,0 +1,143 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+{% block title %}Cart{% endblock %}
+
+{% block extrahead %}
+  <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="cart-main">
+        <div class="cart-banner">
+            <h1 class="p-cart-title">
+                Tu Carrito (
+                <span class="grand-total-number">{{ order.get_cart_items }}</span>
+                )
+            </h1>
+        </div>
+
+        <div class="cart cart-page cart-container">
+            <div class="row">
+                <div class="cart-product-wrapper">
+                    <!-- productos -->
+                    {% for item in items %}
+                        <div class="card cart-item product-info">
+                            <div class="row">
+                                <div class="col-5 line-item-img">
+                                    <a class="p-product-info-link line-item-img-link">
+                                        <div class="p-product-image-wrapper product-image-wrapper">
+                                            <img src="{{ item.product.imageURL }}" alt="{{ item.product.name }} Image" class="p-product-image product-image img-fluid">
+                                        </div>
+                                    </a>
+                                    <div class="inventory-stock-status">
+                                        <div class="stock-icon">
+                                            <i class="far fa-check-circle"></i>
+                                        </div>
+                                        <span>en stock</span>
+                                    </div>
+                                </div>
+                                <div class="col-7">
+                                    <div class="cart-product-title line-item-name ellipsis">
+                                        <a href="{% url 'product-detail' item.product.id %}" class="product-title-link" title="{{ item.product.name }}">{{ item.product.name }}</a>
+                                    </div>
+                                    <div class="line-item-quantity-price cart-container">
+                                        <div class="row align-items-center">
+                                            <div class="col-6 line-item-quantity">
+                                                <div class="quantity-form">
+                                                    <div class="form-group required">
+                                                        <span class="quantity-title">Cantidad:</span>
+                                                        <div class="quantity-container">
+                                                            <form class="quantity-box">
+                                                                <div data-product="{{ item.product.id }}" data-action="remove" class="quantity-value-button update-cart" id="decrease" value="Decrease Value">
+                                                                    <span>-</span>
+                                                                </div>
+                                                                <input class="quantity-input" type="number" id="number" value="{{item.quantity}}" />
+                                                                <div data-product="{{ item.product.id }}" data-action="add" class="quantity-value-button update-cart" id="increase" value="Increase Value">
+                                                                    <span>+</span>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 line-item-total-price text-right">
+                                                <div class="item-total price">
+                                                    <!-- <div class="strike-through non-adjusted-price">
+                                                        <span class="value">$2600.00</span>
+                                                    </div> -->
+                                                    <div class="pricing font-weight-semibold">
+                                                        <span class="value">${{ item.product.price|floatformat:2 }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="edit-add-to-wishlist">
+                                        <a href="#" class="remove-product">Remover</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="cart-totals col-sm-4 offset-sm-1 offset-md-2">
+                    <hr class="p-cart-total-line cart-grey-line">
+                    <div class="p-cart-total total-figures cart-container">
+                        <div class="totals-rows">
+                            <div class="p-cart-total-row row no-gutters">
+                                <div class="col-8 totals-text">
+                                    <p class="cart-subtotal">Subtotal</p>
+                                </div>
+                                <div class="col-4 totals-text">
+                                    <p class="text-right subtotal">
+                                        <span class="value">${{ order.get_cart_total }}</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="p-cart-total-row row no-gutters">
+                                <div class="col-8 totals-text">
+                                    <p class="text-shipping-cost">Costo de Envío</p>
+                                </div>
+                                <div class="col-4 totals-text">
+                                    <p class="text-right shipping-cost">
+                                        <span class="value">$0.00</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="p-cart-total-row row total-tax no-gutters">
+                                <div class="col-8">
+                                    <p>Impuestos Estimados</p>
+                                </div>
+                                <div class="col-4">
+                                    <p class="text-right tax-total">
+                                        <span class="value">$0.00</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="p-cart-total-line cart-grey-line">
+                        <div class="p-cart-total-row row grand-total-incl-vat mb-4 no-gutters">
+                            <div class="col-8 totals-text">
+                                <div class="p-cart-total-grand text-grand-total">Total</div>
+                            </div>
+                            <div class="col-4 totals-text text-right">
+                                <div class="p-cart-total-grand text-right grand-total">
+                                    <span class="value">${{ order.get_cart_total|floatformat:2 }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cart-container checkout-btn_container">
+                        <a href="{% url 'checkout' %}" class="main-btn btn-primary checkout-btn">
+                            Checkout
+                        </a> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+

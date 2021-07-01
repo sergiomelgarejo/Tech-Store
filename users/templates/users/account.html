@@ -1,0 +1,63 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'css/account.css' %}">
+{% endblock extrahead %}
+
+{% block content %}
+    <div class="account-banner">
+        <h1 class="page-title">
+            Cuenta
+        </h1>
+        <div class="account-options">
+            <h1 class="account-banner-info">Haupei {{ user.customer.user }}!</h1>
+            <a href="{% url 'logout' %}" class="account-logout">
+                Salir
+            </a>
+        </div>
+    </div>
+    <div class="account-container">
+        <div class="account-wrapper">
+            <div class="left">
+                <img class="account-profile-image" src="{% static 'css/img/icons/account.png' %}" alt="User">
+                <h4>{{ user.first_name }} {{ user.last_name }}</h4>
+            </div>
+            <div class="right">
+                <div class="info">
+                    <h3>Información</h3>
+                    <div class="info_data">
+                        <div class="data">
+                            <h4>Email</h4>
+                            <p>{{ user.email }}</p>
+                        </div>
+                        <div class="data">
+                            <h4>Teléfono</h4>
+                            <p>0001-213-998761</p>
+                        </div>
+                    </div>
+                    <div class="info_data">
+                        <div class="data">
+                            <h4>Departamento</h4>
+                            <p>st. mary</p>
+                        </div>
+                        <div class="data">
+                            <h4>Ciudad</h4>
+                            <p>Kansas</p>
+                        </div>
+                    </div>
+                    <div class="info_data">
+                        <div class="data">
+                            <h4>C.I.</h4>
+                            <p>st. mary</p>
+                        </div>
+                        <div class="data">
+                            <h4>Dirección</h4>
+                            <p>La jeepeta</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

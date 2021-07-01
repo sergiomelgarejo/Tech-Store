@@ -1,0 +1,275 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block title %}Store{% endblock %}
+
+{% block content %}
+	<main>
+		<div class="hero">
+			<div class="slider">
+				{% for p in slider_two %}
+					<div class="slide">
+						<div class="slide-content slide-two">
+							<h1 class="title two">{{p.name}}</h1>
+							<a href="{% url 'product-detail' p.id %}" class="btn btn-outline">Comprar</a>
+						</div>
+					</div>
+				{% endfor %}
+				
+				{% for p in slider_three %}
+					<div class="slide">
+						<div class="slide-content slide-three">
+							<h1 class="title three">{{p.name}}</h1>
+							<a href="{% url 'product-detail' p.id %}" class="btn btn-outline">Comprar</a>
+						</div>
+					</div>
+				{% endfor %}
+
+				{% for p in slider_four %}
+					<div class="slide">
+						<div class="slide-content slide-four">
+							<h1 class="title four">{{p.name}}</h1>
+							<a href="{% url 'product-detail' p.id %}" class="btn btn-outline">Comprar</a>
+						</div>
+					</div>
+				{% endfor %}
+
+				{% for p in slider_one %}
+					<div class="slide">
+						<div class="slide-content slide-one">
+							<h1 class="title one">{{p.name}}</h1>
+							<a href="{% url 'product-detail' p.id %}" class="btn btn-outline">Comprar</a>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+		
+		<section class="selling-wrap">
+			<div class="container">
+				<div class="selling-grid">
+					<div class="grid-item item-content delivery">
+						<img loading="lazy" src="{% static 'css/img/icons/free_shipping_60px.png' %}" alt="">
+						<div class="item-info">
+							<h5>Delivery Gratis</h5>
+							<p>En compras mayores a 100.000 Gs.</p>
+						</div>
+					</div>
+					<div class="grid-item item-content compra">
+						<img loading="lazy" src="{% static 'css/img/icons/guarantee_60px.png' %}" alt="">
+						<div class="item-info">
+							<h5>Compra Garantizada</h5>
+							<p>Garantía en todos los ítems.</p>
+						</div>
+					</div>
+					<div class="grid-item item-content pago">
+						<img loading="lazy" src="{% static 'css/img/icons/credit_card_60px.png' %}" alt="">
+						<div class="item-info">
+							<h5>Pago Rápido y Seguro</h5>
+							<p>Efectivo y tarjetas de Crédito.</p>
+						</div>
+					</div>
+					<div class="grid-item item-content asesoramiento">
+						<img loading="lazy" src="{% static 'css/img/icons/headset_60px.png' %}" alt="">
+						<div class="item-info">
+							<h5>Asesoramiento en Línea</h5>
+							<p>Respondemos todas tus dudas.</p>
+						</div>
+					</div>
+				</div>
+			</div> 
+		</section>
+
+		<section class="computer-accessories">
+			<div class="container">
+				<h5 class="section-head">
+					<span class="heading">Componentes de PC</span>
+				</h5>
+				<div class="grid">
+					{% for product in computer_offer_products %}
+						<div class="grid-item featured-accessories">    
+							<img loading="lazy" src="{{ product.imageURL }}" alt="{{ product.name }} image" class="accessory-image">
+							<div class="accessory-info">
+								<div class="section-title-price">
+									<a href="{% url 'product-detail' product.id %}">
+										<h5 title="{{ product.name }}" class="accessory-name ">{{ product.name }}</h5>
+									</a>
+									<span class="accessory-price">
+										<span class="dlr-sign">$</span>{{ product.price|floatformat:2 }}
+									</span>
+								</div>
+
+								<div class="section-rating-buttons">
+									<div title="Valoración de clientes" class="accessory-rating">
+										<i class="fas fa-star rating"></i>
+										<i class="fas fa-star rating"></i>
+										<i class="fas fa-star rating"></i>
+										<i class="fas fa-star rating"></i>
+										<i class="fas fa-star-half-alt rating"></i>
+									</div>
+
+									<div class="accessory-buttons">
+										<button data-product="{{product.id}}" data-action="add" title="Agregar al Carrito" class="btn btn-add-cart update-cart">
+											<span class="dots"><i class="fas fa-cart-plus"></i></span>
+										</button>
+										<a title="Ver más detalles" href="{% url 'product-detail' product.id %}" class="btn btn-eye">
+											<span class="dots"><i class="fas fa-eye"></i></span>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</section>
+
+		{% for offer in asus_rog_offer %}
+			<section class="offer">
+				<div class="container">
+					<div class="offer-content">
+						<div class="discount">
+							40% desc.
+						</div>
+						<a href="{% url 'product-detail' offer.id %}" class="offer-link">
+							<h5 class="offer-name">{{offer.name}}</h5>
+						</a>
+						<div title="Valoración de clientes" class="accessory-rating">
+							<i class="fas fa-star rating"></i>
+							<i class="fas fa-star rating"></i>
+							<i class="fas fa-star rating"></i>
+							<i class="fas fa-star rating"></i>
+							<i class="fas fa-star-half-alt rating"></i>
+						</div>
+						<div class="accessory-buttons">
+							<button data-product="{{offer.id}}" data-action="add" title="Agregar al Carrito" href="#" class="btn btn-add-cart update-cart">
+								<span class="dots"><i class="fas fa-cart-plus"></i></span>
+							</button>
+							<a title="Ver más detalles" href="{% url 'product-detail' offer.id %}" class="btn btn-eye">
+								<span class="dots"><i class="fas fa-eye"></i></span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</section>
+		{% endfor %}
+
+		<section class="new-products">
+			<div class="container">
+				<h5 class="section-head">
+					<span class="heading">Nuevos Smartphones</span>
+				</h5>
+				<div class="grid">
+					{% for product in smartphones_offer_products %}
+						<div class="grid-item featured-accessories">    
+							<img loading="lazy" src="{{ product.imageURL }}" alt="" class="accessory-image">
+							<div class="accessory-info">
+								<div class="section-title-price">
+									<a href="{% url 'product-detail' product.id %}">
+										<h5 title="{{ product.name }}" class="accessory-name  ellipsis">{{ product.name }}</h5>
+									</a>
+									<span class="accessory-price">
+										<span class="dlr-sign">$</span>{{ product.price|floatformat:2 }}
+									</span>
+								</div>
+
+								<div class="section-rating-buttons">
+									<div title="Valoración de clientes" class="accessory-rating">
+										<i class="fas fa-star rating"></i>
+										<i class="fas fa-star rating"></i>
+										<i class="fas fa-star rating"></i>
+										<i class="fas fa-star rating"></i>
+										<i class="fas fa-star-half-alt rating"></i>
+									</div>
+
+									<div class="accessory-buttons">
+										<button data-product="{{product.id}}" data-action="add" title="Agregar al Carrito" href="#" class="btn btn-add-cart update-cart">
+											<span class="dots"><i class="fas fa-cart-plus"></i></span>
+										</button>
+										<a title="Ver más detalles" href="{% url 'product-detail' product.id %}" class="btn btn-eye">
+											<span class="dots"><i class="fas fa-eye"></i></span>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</section>
+
+		{% for offer in aorus_monitor_offer %}
+			<section class="offer offer-2">
+				<div class="container">
+					<div class="offer-content">
+						<div class="discount">
+							NUEVO
+						</div>
+						<a href="{% url 'product-detail' offer.id %}" class="offer-link">
+							<h5 class="offer-name">{{offer.name}}</h5>
+						</a>
+						<div title="Valoración de clientes" class="accessory-rating">
+							<i class="fas fa-star rating"></i>
+							<i class="fas fa-star rating"></i>
+							<i class="fas fa-star rating"></i>
+							<i class="fas fa-star rating"></i>
+							<i class="fas fa-star-half-alt rating"></i>
+						</div>
+						<div class="accessory-buttons">
+							<button data-product="{{offer.id}}" data-action="add" title="Agregar al Carrito" href="#" class="btn btn-add-cart update-cart">
+								<span class="dots"><i class="fas fa-cart-plus"></i></span>
+							</button>
+							<a title="Ver más detalles" href="{% url 'product-detail' offer.id %}" class="btn btn-eye">
+								<span class="dots"><i class="fas fa-eye"></i></span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</section>
+		{% endfor %}
+
+		<section class="new-products">
+			<div class="container">
+				<h5 class="section-head">
+					<span class="heading">Lo último en gaming!</span>
+				</h5>
+				<div class="grid">
+					{% for product in games_offer_products %}
+						<div class="grid-item featured-accessories">
+							<img loading="lazy" src="{{ product.imageURL }}" alt="" class="accessory-image">
+							<div class="accessory-info">
+								<div class="section-title-price">
+									<a href="#">
+										<h5 title="{{ product.name }}" class="accessory-name  ellipsis">{{ product.name }}</h5>
+									</a>
+									<span class="accessory-price">
+										<span class="dlr-sign">$</span>{{ product.price|floatformat:2 }}
+									</span>
+								</div>
+
+								<div class="section-rating-buttons">
+									<div title="Valoración de clientes" class="accessory-rating">
+										<i class="fas fa-star rating"></i>
+										<i class="fas fa-star rating"></i>
+										<i class="fas fa-star rating"></i>
+										<i class="fas fa-star rating"></i>
+										<i class="fas fa-star-half-alt rating"></i>
+									</div>
+
+									<div class="accessory-buttons">
+										<button data-product="{{product.id}}" data-action="add" title="Agregar al Carrito" class="btn btn-add-cart update-cart">
+											<span class="dots"><i class="fas fa-cart-plus"></i></span>
+										</button>
+										<a title="Ver más detalles" href="{% url 'product-detail' product.id %}" class="btn btn-eye">
+											<span class="dots"><i class="fas fa-eye"></i></span>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</section>
+	</main>
+{% endblock content %}

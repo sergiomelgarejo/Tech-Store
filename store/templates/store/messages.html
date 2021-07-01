@@ -1,0 +1,13 @@
+{% if messages %}
+    {% for message in messages %}
+    <div class="form__message message-{{ message.tags }}" id="form__message">
+        <p>{{ message }}</p>
+    </div>
+    {% endfor %}
+{% endif %}
+
+<script type="text/javascript">
+    setTimeout(() => {
+        document.getElementById('form__message').classList.add('hidden');
+    }, 5500);
+</script>

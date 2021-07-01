@@ -1,0 +1,97 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+{% block title %}Product{% endblock %}
+
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'css/product_detail.css' %}">
+{% endblock extrahead %}
+
+{% block content %}
+    <p class="deliver-box">Envío gratis a todo el país desde ₲188.000.</p>
+    <section class="product-detail-section">
+        <div class="content-container">
+            <div class="left-container">
+                <div class="product-image-container">
+                    <div id="f-img-container">
+                        <div id="lens"></div>
+                        {% for photo in photos|slice:":1" %}
+                            <img class="product-image-featured" id="featured" src="{{photo.image.url}}" alt=" Image">
+                        {% endfor %}
+                    </div>
+                    <ul class="product-image-list">
+                        {% for photo in photos %}
+                            <li>
+                                <img src="{{photo.image.url}}" class="product-image-item {% if forLoop.counter0 == 0 %} active {% endif %}"
+                                alt="Image">
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="right-container">
+                <div>
+                    <h1 class="product-title">{{ product.name }}</h1>
+                <div class="costumer-reviews-container">
+                    <div title="Valoración de clientes" class="p-d-rating">
+                        <i class="fas fa-star rating"></i>
+                        <i class="fas fa-star rating"></i>
+                        <i class="fas fa-star rating"></i>
+                        <i class="fas fa-star rating"></i>
+                        <i class="fas fa-star-half-alt rating"></i>
+                    </div>
+                    <span>
+                        <p href="#" class="p-d-reviews">
+                        | 986 reviews de clientes.
+                        </p>
+                    </span>
+            </div>
+            </div>
+                <div class="description-container">
+                    <div class="product-description-container">
+                        <h2 class="d-product-title">Descripción</h2>
+                        <i class="description fas fa-chevron-right"></i>
+                    </div>
+                    <div class="p-description-container">
+                        <!-- <div class="subtitle-container">
+                            <span>Display: 16 inches</span>
+                            <span>|</span>
+                            <span>Color: Space Grey</span>
+                        </div>  -->
+                        <p>{{product.description}}</p>
+                    </div>
+                </div>
+                <div class="price-container">
+                    <div class="price-inner">
+                        <span class="p-d-price">${{ product.price }}</span>
+                    </div> 
+                    <div class="price-inner">
+                        <span class="quantity-title">Cantidad:</span>
+                        <div class="quantity-container">
+                            <form class="quantity-box">
+                                <div class="quantity-value-button" id="decrease" value="Decrease Value">
+                                    <span>-</span>
+                                </div>
+                                <input class="quantity-input" type="number" id="number" value="1"/>
+                                <div class="quantity-value-button" id="increase" value="Increase Value">
+                                    <span>+</span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <div class="p-d-btn-cart-container">
+                <button data-product="{{product.id}}" data-action="add" class="p-d-btn-cart update-cart">Agregar al carrito</button>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <script type="text/javascript">
+        // # product details
+        // product description
+        document.querySelector('.description-container').addEventListener('click', () => {
+            document.querySelector('.description-container').classList.toggle('active');
+        });
+    </script>
+{% endblock content %}

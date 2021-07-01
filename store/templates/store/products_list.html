@@ -1,0 +1,50 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'css/products_list.css' %}">
+{% endblock extrahead %}
+
+{% block content %}
+    <section class="products-list computer-accessories">
+        <div class="container">
+            <h5 class="section-head">
+                <span class="heading">Todo el Catálogo</span>
+            </h5>
+            <div class="grid">
+                {% for product in products %}
+                    <div class="grid-item featured-accessories">
+                        <img loading="lazy" src="{{ product.imageURL }}" alt="" class="accessory-image">
+                        <div class="accessory-info">
+                            <div class="section-title-price">
+                                <h5 class="accessory-name ellipsis" title="{{ product.name }}">{{ product.name }}</h5>
+                                <span class="accessory-price">
+                                    <span class="dlr-sign">$</span>{{ product.price|floatformat:2 }}
+                                </span>
+                            </div>
+
+                            <div class="section-rating-buttons">
+                                <div title="Valoración de clientes" class="accessory-rating">
+                                    <i class="fas fa-star rating"></i>
+                                    <i class="fas fa-star rating"></i>
+                                    <i class="fas fa-star rating"></i>
+                                    <i class="fas fa-star rating"></i>
+                                    <i class="fas fa-star-half-alt rating"></i>
+                                </div>
+
+                                <div class="accessory-buttons">
+                                    <button data-product="{{product.id}}" data-action="add" title="Agregar al Carrito" href="#" class="btn btn-add-cart update-cart">
+                                        <span class="dots"><i class="fas fa-cart-plus"></i></span>
+                                    </button>
+                                    <a title="Ver más detalles" href="{% url 'product-detail' product.id %}" class="btn btn-eye">
+                                        <span class="dots"><i class="far fa-eye"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock content %}

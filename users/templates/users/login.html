@@ -1,0 +1,48 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock extrahead %}
+
+{% block content %}
+<div class="form-banner login-banner">
+    <h1 class="form-banner-title">
+        Iniciar Sesión
+    </h1>
+</div>
+    <div class="main-form main-login">
+        <form method="POST" action="" class="form login-form" id="form">
+            {% csrf_token %}
+            <!-- group username -->
+            <div class="form__group login-group" id="group__username">
+                <label for="username" class="form__label">Usuario</label>
+                <div class="form__group-input">
+                    <input type="text" class="form__input" name="username" id="id_username" placeholder="Dalex47">
+                    <i class="form__validation-status far fa-times-circle"></i>
+                </div>
+                <p class="form__input-error">El usuario tiene que ser de 4 a 16 dígitos y sólo puede contener letras, números y guión bajo.</p>
+            </div>
+
+            <!-- group password -->
+            <div class="form__group login-group" id="group__password1">
+                <label for="password" class="form__label">Contraseña</label>
+                <div class="form__group-input">
+                    <input type="password" class="form__input" name="password1" id="id_password1" placeholder="********">
+                    <i class="form__validation-status far fa-times-circle"></i>
+                </div>
+                <p class="form__input-error">La contraseña debe tener de 4 a 16 dígitos.</p>
+            </div>
+
+            {% include 'store/messages.html' %}
+
+            <div class="form__group form__group-btn-submit">
+                <button type="submit" class="main-btn form__btn btn-primary login-btn">Iniciar Sesión</button>
+                <small class="submit-login">Todavía no tenés una cuenta? 
+                    <a class="submit-login-link" href="{% url 'register' %}">Registrate</a>
+                </small>
+                <p class="form__message-success" id="form__message-success">Datos enviados correctamente!</p>
+            </div>
+        </form> 
+    </div>
+{% endblock content %}

@@ -1,0 +1,413 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block extrahead %}
+  <link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+{% endblock %}
+
+{% block content %}
+	<div class="checkout-section">
+		<div class="checkout-banner">
+			<h1 class="page-title">
+				Checkout
+			</h1>
+		</div>
+		<div id="checkout-main" class="check-container">
+			<div class="row">
+				<div class="col-sm-7 checkout-col-left">
+					{% if not user.is_authenticated %}
+						<div class="checkout-sign-in row mb-4" id="checkout-sign-in">
+							<div class="col-12">
+								<h2 class="h4">Necesitas registrarte para confirmar la compra.</h2>
+							</div>
+							<div class="d-f j-c-c col-12 col-md mt-3">
+								<a href="{% url 'register' %}" class="main-btn btn-secondary btn-block">
+									Registrarse
+								</a>
+							</div>
+						</div>
+					{% endif %}
+					<div class="form-banner shipping-banner">
+						<h1 class="form-banner-title">Envío</h1>
+					</div>
+					<div class="main-form shipping-form" id="shipping-info">
+						<form method="POST" action="" class="form" id="form">
+							{% csrf_token %}
+							{% if not user.is_authenticated %}
+								<div class="form__group" id="group__username">
+									<label for="username" class="form__label">Usuario <span class="required-toolkit">*
+										<div class="nav-tooltip form-tooltip">
+											Obligatorio
+										</div>
+									</span></label>
+									<div class="form__group-input">
+										<input type="text" class="form__input checkout-input" name="username" id="username" placeholder="JohnCarpenter">
+										<i class="form__validation-status far fa-times-circle"></i>
+									</div>
+									<p class="form__input-error">El usuario tiene que ser de 1 a 150 dígitos y sólo puede contener letras, números y sólo estos caracteres especiales: '@', '.', '+', '-', '_'.</p>
+								</div>
+								<div class="form__group" id="group__email">
+									<label for="email" class="form__label">Email <span class="required-toolkit">*
+										<div class="nav-tooltip form-tooltip">
+											Obligatorio
+										</div>
+									</span></label>
+									<div class="form__group-input">
+										<input type="email" class="form__input checkout-input" name="email" id="email" placeholder="johncarpenter@gmail.com">
+										<i class="form__validation-status far fa-times-circle"></i>
+									</div>
+									<p class="form__input-error">El correo sólo puede contener letras, números y solo caracteres especiales como: '_', '-', '.', '+' .</p>
+								</div>
+							{% endif %}
+							<!-- group adress -->
+							<div class="form__group" id="group__address">
+								<label for="adress" class="form__label">Dirección <span class="required-toolkit">*
+									<div class="nav-tooltip form-tooltip">
+										Obligatorio
+									</div>
+								</span></label>
+								<div class="form__group-input">
+									<input type="text" class="form__input checkout-input" name="address" id="address" placeholder="Av. Mcal. López c/ Av. Kubitschek.">
+									<i class="form__validation-status far fa-times-circle"></i>
+								</div>
+								<p class="form__input-error">Av. Mcal. López c/ Av. Kubitschek.</p>
+							</div>
+				
+							<!-- group dpto -->
+							<div class="form__group" id="group__dpto">
+								<label for="dpto" class="form__label">Departamento <span class="required-toolkit">*
+									<div class="nav-tooltip form-tooltip">
+										Obligatorio
+									</div>
+								</span></label>
+								<div class="form__group-input">
+									<input type="text" class="form__input checkout-input" name="dpto" id="dpto" placeholder="Central">
+									<i class="form__validation-status far fa-times-circle"></i>
+								</div>
+								<p class="form__input-error">Ejemplos válidos: San Pedro, Caaguazú, Ñeembucú</p>
+							</div>
+				
+							<!-- group city -->
+							<div class="form__group" id="group__city">
+								<label for="city" class="form__label">Ciudad <span class="required-toolkit">*
+									<div class="nav-tooltip form-tooltip">
+										Obligatorio
+									</div>
+								</span></label>
+								<div class="form__group-input">
+									<input type="text" class="form__input checkout-input" name="city" id="city" placeholder="Asunción">
+									<i class="form__validation-status far fa-times-circle"></i>
+								</div>
+								<p class="form__input-error">Ejemplos válidos: Asunción, Caacupé, Ypacaraí.</p>
+							</div>
+				
+							<!-- group c.i.-->
+							<div class="form__group" id="group__c_i">
+								<label for="password2" class="form__label">Cédula Identidad</label>
+								<div class="form__group-input">
+									<input type="text" class="form__input checkout-input" name="c_i" id="c_i" placeholder="1.234.567">
+									<i class="form__validation-status far fa-times-circle"></i>
+								</div>
+								<p class="form__input-error">Ejemplos válidos: 1.234.567, 1234567, 123.456, 123456.</p>
+							</div>
+				
+							<!-- group ruc -->
+							<div class="form__group" id="group__ruc">
+								<label for="ruc" class="form__label">R.U.C.</label>
+								<div class="form__group-input">
+									<input type="text" class="form__input checkout-input" name="ruc" id="ruc" placeholder="12345678-9">
+									<i class="form__validation-status far fa-times-circle"></i>
+								</div>
+								<p class="form__input-error">El ruc debe ir sólo con guión y sin punto.</p>
+							</div>
+				
+							<!-- group phone -->
+							<div class="form__group" id="group__phone_number">
+								<label for="phone" class="form__label">Teléfono <span class="required-toolkit">*
+									<div class="nav-tooltip form-tooltip">
+										Obligatorio
+									</div>
+								</span></label>
+								<div class="form__group-input">
+									<input type="phone" class="form__input checkout-input" name="phone_number" id="id_phone_number" placeholder="595 983 123456">
+									<i class="form__validation-status far fa-times-circle"></i>
+								</div>
+								<p class="form__input-error">Ejemplos válidos: 595 982 ..., 0982 ..., 595982..., 0982...</p>
+							</div>
+				
+							{% include 'store/messages.html' %}
+				
+							<div class="form__group form__group-btn-submit">
+								<button id="shipping-submit" type="submit" class="main-btn form__btn btn-primary">Ir a Pago</button>
+								<p class="form__message-success" id="form__message-success">Datos enviados correctamente!</p>
+							</div>
+						</form> 
+					</div>
+				</div>
+				<div class="col-sm-5 checkout-col-right">
+					<div class="order-product-summary cart-mini check-container">
+						<div class="row">
+							<div class="col-12 order-details-wrapper">
+								<span class="order-receipt-label grand-total-label">
+									Order Details (<span class="grand-total-number">{{ order.get_cart_items }}</span>)
+								</span>
+								<hr class="cart-grey-line">
+							</div>
+						</div>
+						<div class="collapse show" id="collapse-order-product-summary">
+							<!-- producto -->
+							{% for item in items %}
+								<div class="row product-info p-product-info">
+									<div class="col-3 p-product-info-image product-info-image">
+										<a class="p-product-info-link line-item-img-link" href="#">
+											<div class="p-product-image-wrapper product-image-wrapper">
+												<img class="p-product-image product-image img-fluid" sizes="(min-width:1199px) 180px, (min-width:959px) 67vw, (min-width:544px) 50vw, 100vw" src="{{ item.product.imageURL }}" alt="">
+											</div>
+										</a>
+									</div>
+									<div class="col-9 p-product-info-details product-info-details">
+										<div class="row p-product-details-inner">
+												<div class="p-product-details-name line-item-name col col-md-7">
+													<a href="{% url 'product-detail' item.product.id %}">
+														<span>{{ item.product.name }}</span>
+													</a>
+												</div>
+											<div class="p-product-details-price d price col-5 text-right hidden-xs-down">
+												<!-- <div class="strike-through non-adjusted-price">
+													<span class="value">$26.000</span>
+												</div> -->
+												<div class="pricing line-item-total-price-amount font-weight-semibold">
+													<span class="value">${{ item.product.price }}</span>
+												</div>
+											</div>
+										</div>
+										<hr class="p-product-line line-item-header-line">
+										<div class="p-product-attributes line-item-attributes">
+											<div class="p-product-attribute p-product-attribute-main">
+												<div class="p-attribute p-attribute-quantity line-item-quantity row align-items-center">
+													<div class="col-6 line-item-quantity">
+														<div class="line-item-quantity-display" style="display: none;">
+															<label class="p-attribute-name line-item-attribute-name">Cant </label> &nbsp;
+															<span class="p-attribute-value line-item-quantity-number">{{ item.product.quantity }}</span>
+														</div>
+														<div class="line-item-quantity-edit mt-2">
+															<div class="quantity-form">
+																<div class="form-group required">
+																	<span class="quantity-title">Cantidad:</span>
+																	<div class="quantity-container">
+																		<form class="quantity-box">
+																			<div data-product="{{ item.product.id }}" data-action="remove" class="quantity-value-button update-cart" id="decrease" value="Decrease Value">
+																				<span>-</span>
+																			</div>
+																			<input class="quantity-input" type="number" id="number" value="{{item.quantity}}" />
+																			<div data-product="{{ item.product.id }}" data-action="add" class="quantity-value-button update-cart" id="increase" value="Increase Value">
+																				<span>+</span>
+																			</div>
+																		</form>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="col-6 line-item-total-price text-right d-sm-none">
+														<div class="item-total-6662d6a8f2f7e18ba4d99e184d price">
+															<div class="strike-through non-adjusted-price">
+																<span class="value">$260.00</span>
+															</div>
+															<div class="pricing line-item-total-price-amount item-total-6662d6a8f2f7e18ba4d99e184d font-weight-semibold">
+																<span class="value">$179.99</span>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="edit-add-to-wishlist ">
+										<a href="#" class="remove-product" aria-label="remove" title="Remover">Remover
+										</a>
+									</div>
+									<div class="p-product-max-qty max-order-qty-msg hidden">
+										<div class="alert alert-danger alert-dismissible error-message" role="alert">
+											<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+												<span aria-hidden="true">×</span>
+											</button>
+											<p class="error-message-text">
+											</p>
+										</div>
+									</div>
+								</div>
+							{% endfor %}
+							<hr class="cart-grey-line mt-4 mb-4">
+							<div class="totals row">
+								<div class="p-cart-total total-figures check-container">
+									<div class="totals-rows">
+										<div class="p-cart-total-row row no-gutters">
+											<div class="col-8 totals-text">
+												<p class="cart-subtotal">SubTotal</p>
+											</div>
+											<div class="col-4 totals-text">
+												<p class="text-right sub-total">
+													<span class="value">${{ order.get_cart_total|floatformat:2 }}</span>
+												</p>
+											</div>
+										</div>
+									<div class="p-cart-total-row row no-gutters">
+										<div class="col-8 totals-text">
+											<p class="text-shipping-cost">Costos de Envío</p>
+										</div>
+										<div class="col-4 totals-text">
+											<p class="text-right shipping-cost">
+												<span class="value">$0.00</span>
+											</p>
+										</div>
+									</div>
+									<div class="p-cart-total-row row shipping-discount no-gutters
+												hide-shipping-discount">
+										<div class="col-8">
+											<p class="cart-shipping">Shipping Discount</p>
+										</div>
+										<div class="col-4">
+											<p class="text-right shipping-discount-total">-
+												<span class="value">$0.00</span>
+											</p>
+										</div>
+									</div>
+									<div class="p-cart-total-row row order-discount no-gutters
+												hide-order-discount">
+										<div class="col-8">
+											<p>Order Discount</p>
+										</div>
+										<div class="col-4">
+											<p class="text-right order-discount-total"> -
+												<span class="value">$0.00</span>
+											</p>
+										</div>
+									</div>
+
+									<div class="p-cart-total-row row total-tax no-gutters">
+										<div class="col-8">
+											<p>Impuestos Estimados</p>
+										</div>
+										<div class="col-4">
+											<p class="text-right tax-total">$0.00</p>
+										</div>
+									</div>
+									</div>
+									<hr class="p-cart-total-line cart-grey-line">
+									<div class="p-cart-total-row row grand-total-incl-vat mb-4 no-gutters">
+										<div class="col-8 totals-text">
+											<div class="p-cart-total-grand text-grand-total">Total</div>
+										</div>
+										<div class="col-4 totals-text text-right">
+											<p class="p-cart-total-grand text-right grand-total">
+												<span class="value">${{ order.get_cart_total|floatformat:2 }}</span>
+											</p>
+										</div>
+									</div>
+
+									<!-- visible only if a product is digital -->
+									<div class="row hidden" id="no-shipping">
+										<div class="col-12 col-lg-12 next-step-button">
+											<button id="shipping-submit" class="main-btn btn-primary btn-block submit-shipping" type="submit" name="submit" value="submit-shipping">Confirmar Compra</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		var shipping = '{{ order.shipping }}';
+		var total = '{{order.get_cart_total}}';
+
+		if (shipping == 'False') {
+			document.getElementById('shipping-info').innerHTML = '';
+			document.querySelector('.shipping-banner').classList.add('hidden');
+		}
+
+		if (shipping == 'False' && user != 'AnonymousUser') {
+			// hide the entire form if user is logged in and shipping is false
+			document.getElementById('shipping-info').classList.add('hidden');
+			document.querySelector('.shipping-banner').classList.add('hidden');
+			document.querySelector('#no-shipping').classList.toggle('hidden');
+		}
+
+		var form = document.getElementById('form');
+
+		form.addEventListener('submit', function(e) {
+			e.preventDefault();
+			console.log('Form submitted...');
+		});
+
+		document.getElementById('shipping-submit').addEventListener('click', function(e) {
+			submitFormData();
+		});
+
+		function submitFormData() {
+			console.log('Payment button clicked');
+			
+			var userFormData = {
+				'username': null,
+				'email':null,
+				'total':total,
+			}
+
+			var shippingInfo = {
+				// 'firstname':null,
+				// 'lastname':null,
+				'address':null,
+				'dpto':null,
+				'city':null,
+				'c_i':null,
+				'phone_number':null,
+				'ruc':null
+			}
+
+			if (shipping != 'False') {
+				// shippingInfo.firstname = form.firstname.value;
+				// shippingInfo.username = form.username.value;
+				shippingInfo.address = form.address.value;
+				shippingInfo.dpto = form.dpto.value;
+				shippingInfo.city = form.city.value;
+				shippingInfo.c_i = form.c_i.value;
+				shippingInfo.phone_number = form.phone_number.value;
+				shippingInfo.ruc = form.ruc.value;
+			}
+
+			if (user == 'AnonymousUser') {
+				userFormData.email = form.email.value;
+				userFormData.username = form.username.value;
+			}
+
+			var url = '/process_order/'
+
+			fetch(url, {
+				method:'POST',
+				headers:{
+					'Content-Type':'application/json',
+					'X-CSRFToken':csrftoken,
+				},
+				body:JSON.stringify({'form':userFormData, 'shipping':shippingInfo})
+			})
+
+			.then((response) => response.json())
+
+			.then((data) => {
+				console.log('Sucess:',data)
+				alert('Transaction completed')
+
+				cart = {}
+				document.cookie ='cart=' + JSON.stringify(cart) + ";domain=;path=/"
+
+				window.location.href = "{% url 'store' %}"
+			})
+		}
+	</script>
+{% endblock content %}
