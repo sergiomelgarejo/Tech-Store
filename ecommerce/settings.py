@@ -11,9 +11,13 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-import django_heroku
-import dj_database_url
-from decouple import config
+# import django_heroku
+# import dj_database_url
+# from decouple import config
+
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -28,7 +32,7 @@ SECRET_KEY = '-f1(9x01olf3gf5*r)iv$35-f@ul2tk#0il02nqdf_%m^2&955'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://techstore-py.herokuapp.com/']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -46,7 +50,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -140,5 +143,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 LOGIN_URL = 'login'
 
 # Activate Django-Heroku.
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
 
+cloudinary.config( 
+    cloud_name = "sm007", 
+    api_key = "589841445897156", 
+    api_secret = "y5zoj0ap2da9uPgptp7jS7DWgbk"
+)

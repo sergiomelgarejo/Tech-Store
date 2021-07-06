@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from cloudinary.models import CloudinaryField
 
 class Company(models.Model):
     name = models.CharField(max_length=60)
@@ -32,7 +33,7 @@ class Product(models.Model):
         null=False, blank=False
     )
     digital = models.BooleanField(default=False, null=True, blank=False)
-    image = models.ImageField(null=True, blank=True)
+    image = CloudinaryField('image', null=True, blank=True)
     description = models.TextField(max_length=1000, null=True, blank=False)
 
     def __str__(self):
@@ -52,7 +53,8 @@ class ProductImage(models.Model):
         Product, default=None, 
         on_delete=models.CASCADE
     )
-    image = models.ImageField(upload_to='images/')
+    # image = models.ImageField(upload_to='images/')
+    image = CloudinaryField('image')
 
     def __str__(self):
         return self.product.name

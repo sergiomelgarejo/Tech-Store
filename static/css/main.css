@@ -929,7 +929,7 @@ nav.active .cart-count {
 	position: relative;
 }
 
-/* Slider section */
+/* Slider section - small images */
 .slider {
 	display: block;
 	width: 100%;
@@ -953,26 +953,26 @@ nav.active .cart-count {
 .slide:nth-child(1) {
 	left: 0%;
 	animation-delay: -1s;
-	background-image: url(img/slider/samsung/small.jpg);
+	background-image: url(https://res.cloudinary.com/sm007/image/upload/v1625587547/small_dt5me6.jpg);
 	background-size: cover;
 	background-position: center;
 }
 .slide:nth-child(2) {
 	animation-delay: 2s;
-	background-image: url(img/slider/razer/small.jpg);
+	background-image: url(https://res.cloudinary.com/sm007/image/upload/v1625587548/small_uxxjfd.jpg);
 	background-size: cover;
 	background-position: center;
 }
 .slide:nth-child(3) {
 	animation-delay: 5s;
-	background-image: url(img/slider/oneplus/small.jpg);
+	background-image: url(https://res.cloudinary.com/sm007/image/upload/v1625587547/small_pyr5h5.jpg);
 	background-size: cover;
 	background-position: center center;
 }
 .slide:nth-child(4) {
 	left: 0%;
 	animation-delay: 8s;
-	background-image: url(img/slider/apple/small.jpg);
+	background-image: url(https://res.cloudinary.com/sm007/image/upload/v1625587547/small_qi7c6g.jpg);
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center center;
@@ -1300,7 +1300,7 @@ nav.active .cart-count {
 
 /* Large Offer Styles */
 .offer {
-	background: url(img/Offer/small.jpg);
+	background: url(https://res.cloudinary.com/sm007/image/upload/v1625588975/small_fxwv4m.jpg);
 	background-size: cover;
 	padding: .1rem 0 3rem 0;
 }
@@ -1351,7 +1351,7 @@ nav.active .cart-count {
 	border: 1px solid #fff;
 }
 .offer-2{
-	background: url(img/Offer/offer_2/small.jpg)!important;
+	background: url(https://res.cloudinary.com/sm007/image/upload/v1625589074/small_aqwjmo.jpg)!important;
 }
 .offer-2 .offer-name{
 	font-size: 1.5rem;
@@ -1696,7 +1696,7 @@ nav.active .cart-count {
 	}
 	/* Special Offer Styles */
 	.offer {
-		background: url(img/Offer/medium.jpg);
+		background: url(https://res.cloudinary.com/sm007/image/upload/v1625588975/medium_z5kbhy.jpg);
 		background-size: 100% 100%;
 		padding: .1rem 0;
 	}
@@ -1718,7 +1718,7 @@ nav.active .cart-count {
 	}
 	/* offer-2 */
 	.offer-2{
-		background: url(img/Offer/offer_2/medio_test.jpg)!important;
+		background: url(https://res.cloudinary.com/sm007/image/upload/v1625589073/medium_pvjmyi.jpg)!important;
 	}
 	.offer-2 .offer-name,
 	.offer-2 .accessory-rating,
@@ -2113,7 +2113,7 @@ nav.active .cart-count {
 	}
 	/* Special Offer Styles */
 	.offer {
-		background: url(img/Offer/large.jpg);
+		background: url(https://res.cloudinary.com/sm007/image/upload/v1625588974/large_l2iwy7.jpg);
 		background-size: cover;
 		padding: .1rem 0;
 	}
@@ -2135,7 +2135,7 @@ nav.active .cart-count {
 	}
 	/* offer-2 */
 	.offer-2{
-		background: url(img/Offer/offer_2/large.jpg)!important;
+		background: url(https://res.cloudinary.com/sm007/image/upload/v1625589073/large_joro7w.jpg)!important;
 	}
 	.offer-2 .offer-name,
 	.offer-2 .accessory-rating,
@@ -2145,21 +2145,21 @@ nav.active .cart-count {
 }
 
 @media screen and (min-width: 1200px) {
-	/* Slider styles */
+	/* Slider styles - large images */
 	.slide:nth-child(1) {
-		background: url(img/slider/samsung/large.jpg);
+		background: url(https://res.cloudinary.com/sm007/image/upload/v1625587548/large_ui5eyd.jpg);
 		background-position: center center;
 	}
 	.slide:nth-child(2) {
-		background: url(img/slider/razer/large.jpg);
+		background: url(https://res.cloudinary.com/sm007/image/upload/v1625587549/large_vy2qy8.jpg);
 		background-position: center center;
 	}
 	.slide:nth-child(3) {
-		background: url(img/slider/oneplus/large.jpg);
+		background: url(https://res.cloudinary.com/sm007/image/upload/v1625587547/large_fadlmq.jpg);
 		background-position: center center;
 	}
 	.slide:nth-child(4) {
-		background: url(img/slider/apple/large.jpg);
+		background: url(https://res.cloudinary.com/sm007/image/upload/v1625587547/large_xwivfi.jpg);
 		background-position: center center;
 		transform: translateY(8%);
 	}
@@ -2228,7 +2228,7 @@ nav.active .cart-count {
 
 	/* Special Offer Styles */
 	.offer {
-		background: url(img/Offer/extra_large.jpg);
+		background: url(https://res.cloudinary.com/sm007/image/upload/v1625588975/extra_large_x59utj.jpg);
 		background-size: 100% 120%;
 	}
 	.offer .container {
@@ -2251,7 +2251,7 @@ nav.active .cart-count {
 		font-size: 4rem;
 	}
 	.offer-2 {
-		background: url(img/Offer/offer_2/extra_large.jpg)!important;
+		background: url(https://res.cloudinary.com/sm007/image/upload/v1625589072/extra_large_jnj1xf.jpg)!important;
 	}
 }
 
