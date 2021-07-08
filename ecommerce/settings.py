@@ -11,9 +11,9 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-# import django_heroku
+import django_heroku
 import dj_database_url
-# from decouple import config
+from decouple import config
 
 import cloudinary
 import cloudinary.uploader
@@ -150,7 +150,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 LOGIN_URL = 'login'
 
 # Activate Django-Heroku.
-# django_heroku.settings(locals())
+django_heroku.settings(locals())
 
 # Cloud storage settings
 cloudinary.config( 
