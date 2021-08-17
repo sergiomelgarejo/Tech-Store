@@ -1,7 +1,7 @@
 # Tech-Store Ecommerce Website With Django
 
-![DEMO1] (./static/demo.png)
-![DEMO2] (./static/demo2.png)
+![DEMO1] (https://github.com/sergiomelgarejo/Tech-Store/blob/master/demo.png?raw=true)
+![DEMO2] (https://github.com/sergiomelgarejo/Tech-Store/blob/master/demo2.png?raw=true)
 
 
 # Features
