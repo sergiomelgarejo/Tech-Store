@@ -1,8 +1,8 @@
 # Tech-Store Ecommerce Website With Django
 
-![DEMO] (https://github.com/sergiomelgarejo/Tech-Store/blob/master/demo.png)
-![DEMO2] (https://github.com/sergiomelgarejo/Tech-Store/blob/master/demo2.png)
+![DEMO] (https://github.com/sergiomelgarejo/Tech-Store/blob/master/static/demo.png)
 
+![DEMO2] (https://github.com/sergiomelgarejo/Tech-Store/blob/master/static/demo2.png)
 
 # Features
 * Full featured shopping cart
